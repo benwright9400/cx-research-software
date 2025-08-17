@@ -14,6 +14,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { Props } from 'next/script'
 import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 
 const navigation = [
     { name: 'Research Strategy', href: '#', icon: HomeIcon, path: "/research-strategy" },
@@ -87,7 +88,7 @@ export default function SidebarLayoutWrapper({ children }: Props) {
                                             <ul role="list" className="-mx-2 space-y-1">
                                                 {navigation.map((item) => (
                                                     <li key={item.name}>
-                                                        <a
+                                                        <Link
                                                             href={item.path}
                                                             className={classNames(
                                                                 pathname === item.path
@@ -98,7 +99,7 @@ export default function SidebarLayoutWrapper({ children }: Props) {
                                                         >
                                                             <item.icon aria-hidden="true" className="size-6 shrink-0" />
                                                             {item.name}
-                                                        </a>
+                                                        </Link>
                                                     </li>
                                                 ))}
                                             </ul>
@@ -132,7 +133,7 @@ export default function SidebarLayoutWrapper({ children }: Props) {
                                     <ul role="list" className="-mx-2 space-y-1">
                                         {navigation.map((item) => (
                                             <li key={item.name}>
-                                                <a
+                                                <Link
                                                     href={item.path}
                                                     className={classNames(
                                                         pathname === item.path
@@ -143,7 +144,7 @@ export default function SidebarLayoutWrapper({ children }: Props) {
                                                 >
                                                     <item.icon aria-hidden="true" className="size-6 shrink-0" />
                                                     {item.name}
-                                                </a>
+                                                </Link>
                                             </li>
                                         ))}
                                     </ul>
