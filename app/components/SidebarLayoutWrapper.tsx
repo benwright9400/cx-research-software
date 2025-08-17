@@ -21,12 +21,7 @@ const navigation = [
     { name: 'Findings', href: '#', icon: FolderIcon, path: "/findings" },
     { name: 'Personas', href: '#', icon: CalendarIcon, path: "/personas" },
     { name: 'Work', href: '#', icon: DocumentDuplicateIcon, path: "/work" },
-    { name: 'Participants', href: '#', icon: ChartPieIcon, path: "/personas" },
-]
-const teams = [
-    { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
-    { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
-    { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false },
+    { name: 'Participants', href: '#', icon: ChartPieIcon, path: "/participants" },
 ]
 
 function classNames(...classes: String[]) {
