@@ -3,26 +3,31 @@
 import { Children, useState } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from '@headlessui/react'
 import {
+    ArrowTrendingUpIcon,
     Bars3Icon,
+    BriefcaseIcon,
     CalendarIcon,
     ChartPieIcon,
     DocumentDuplicateIcon,
+    DocumentIcon,
     FolderIcon,
     HomeIcon,
+    UserGroupIcon,
     UsersIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { Props } from 'next/script'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import { useSession } from 'next-auth/react'
 
 const navigation = [
-    { name: 'Research Strategy', href: '#', icon: HomeIcon, path: "/research-strategy" },
-    { name: 'Research Instances', href: '#', icon: UsersIcon, path: "/research-instances" },
-    { name: 'Findings', href: '#', icon: FolderIcon, path: "/findings" },
-    { name: 'Personas', href: '#', icon: CalendarIcon, path: "/personas" },
-    { name: 'Work', href: '#', icon: DocumentDuplicateIcon, path: "/work" },
-    { name: 'Participants', href: '#', icon: ChartPieIcon, path: "/participants" },
+    { name: 'Research Strategy', href: '#', icon: ArrowTrendingUpIcon, path: "/research-strategy" },
+    { name: 'Research Instances', href: '#', icon: DocumentDuplicateIcon, path: "/research-instances" },
+    { name: 'Findings', href: '#', icon: DocumentIcon, path: "/findings" },
+    { name: 'Personas', href: '#', icon: UsersIcon, path: "/personas" },
+    { name: 'Work', href: '#', icon: BriefcaseIcon, path: "/work" },
+    { name: 'Participants', href: '#', icon: UserGroupIcon, path: "/participants" },
 ]
 
 function classNames(...classes: String[]) {
@@ -32,6 +37,7 @@ function classNames(...classes: String[]) {
 export default function SidebarLayoutWrapper({ children }: Props) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const pathname = usePathname();
+    const session = useSession();
 
     if (pathname.includes("/login")) {
         return <>{children}</>
@@ -150,18 +156,18 @@ export default function SidebarLayoutWrapper({ children }: Props) {
                                     </ul>
                                 </li>
                                 <li className="-mx-6 mt-auto">
-                                    <a
-                                        href="#"
+                                    <Link
+                                        href="/account"
                                         className="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-white hover:bg-white/5"
                                     >
                                         <img
                                             alt=""
-                                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                            src={session.data?.user.image || null}
                                             className="size-8 rounded-full bg-gray-800 outline -outline-offset-1 outline-white/10"
                                         />
                                         <span className="sr-only">Your profile</span>
-                                        <span aria-hidden="true">Tom Cook</span>
-                                    </a>
+                                        <span aria-hidden="true">{session.data?.user.name}</span>
+                                    </Link>
                                 </li>
                             </ul>
                         </nav>
@@ -182,7 +188,7 @@ export default function SidebarLayoutWrapper({ children }: Props) {
                         <span className="sr-only">Your profile</span>
                         <img
                             alt=""
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                            src={session.data?.user.image || null}
                             className="size-8 rounded-full bg-gray-800 outline -outline-offset-1 outline-white/10"
                         />
                     </a>
