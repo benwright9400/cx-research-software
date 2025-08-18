@@ -3,6 +3,8 @@
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { PopupContextType, usePopup } from '../providers/child-providers/PopupProvider'
+import DocumentForm from './forms/DocumentForm';
+import DocumentTable from './tables/DocumentTable';
 
 // Written to eventually include multiple drawer pages through dynamic imports
 export default function Drawer() {
@@ -45,7 +47,11 @@ export default function Drawer() {
                       </div>
                     </div>
                   </div>
-                  <div className="relative mt-6 flex-1 px-4 sm:px-6">{/* Your content */}</div>
+                  <div className="relative mt-6 flex-1 px-4 sm:px-6">
+                    {/* Your content */}
+                    <DocumentForm />
+                    <DocumentTable />
+                    </div>
                 </div>
               </DialogPanel>
             </div>
