@@ -12,8 +12,8 @@ export default function DocumentTable() {
     <div className="px-4">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold text-white mt-4">Documents</h1>
-          <p className="mt-2 text-sm text-gray-300">
+          <h1 className="text-base font-semibold dark:text-white mt-4">Documents</h1>
+          <p className="mt-2 text-sm dark:text-gray-300 text-gray-600">
             A list of all uploaded evidence documents 
           </p>
         </div>
@@ -22,10 +22,10 @@ export default function DocumentTable() {
         <table className="min-w-full divide-y divide-white/15">
           <thead>
             <tr>
-              <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white">
+              <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold dark:text-white text-black">
                 Name
               </th>
-              <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
+              <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold dark:text-white text-black">
                 Status
               </th>
               <th scope="col" className="py-3.5 pl-3 pr-4 sm:pr-0">
@@ -33,15 +33,15 @@ export default function DocumentTable() {
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/10 bg-gray-900">
+          <tbody className="divide-y divide-white/10 dark:bg-gray-900">
             {people.map((person) => (
               <tr key={person.email}>
-                <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-white sm:w-auto sm:max-w-none">
+                <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium dark:text-white text-gray-600 sm:w-auto sm:max-w-none">
                   {person.name}
                   <dl className="font-normal lg:hidden">
                   </dl>
                 </td>
-                <td className="px-3 py-4 text-sm text-gray-400">{person.role}</td>
+                <td className="px-3 py-4 text-sm font-medium text-gray-400">{person.role}</td>
                 <td className="py-4 pl-3 pr-8 text-right text-sm font-medium">
                   <a href="#" className="text-indigo-400 hover:text-indigo-300">
                     Delete<span className="sr-only">, {person.name}</span>
