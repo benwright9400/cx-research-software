@@ -38,6 +38,11 @@ export default function DocumentForm() {
             },
         });
 
+        setAlert({
+                success: true,
+                message: "Upload in progress - this may take a couple of minutes"
+            })
+
         const successfullLoggedInDb = await logFileUpload(`${session.data?.user.googleSub}/${file.name}`, file.name);
 
         if (upload.ok && successfullLoggedInDb) {

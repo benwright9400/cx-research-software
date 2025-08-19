@@ -1,5 +1,7 @@
+import ResearchDisplayTable from "../components/tables/ResearchDisplayTable";
+
 export default function FindingsPage() {
     return <div>
-        Findings
+        <ResearchDisplayTable />
     </div>;
 }

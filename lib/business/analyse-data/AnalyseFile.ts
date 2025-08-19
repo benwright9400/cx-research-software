@@ -162,9 +162,9 @@ export default async function analyseFile(uri: string) {
 
   parsedThemes.forEach((theme) => {
     createTheme({
-        uri: uri,
-        theme: theme.theme,
-        description: theme.description
+      uri: uri,
+      theme: theme.theme,
+      description: theme.description,
     });
   });
 
