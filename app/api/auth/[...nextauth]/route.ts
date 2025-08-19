@@ -14,11 +14,22 @@ export const authOptions: NextAuthOptions = {
       if (account && profile) {
         token.googleSub = profile.sub;
       }
+      console.log(
+        "google sub token (jwt): ",
+        token.googleSub,
+        " ",
+        account,
+        " ",
+        profile
+      );
       return token;
     },
     async session({ session, token }) {
       // Expose Google sub ID in session
-      session.user.googleSub = token.googleSub;
+      if (session.user) {
+        session.user.googleSub = token.googleSub as string;
+      }
+      console.log("google sub token (session): ", session.user.googleSub);
       return session;
     },
   },

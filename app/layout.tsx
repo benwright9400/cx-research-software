@@ -4,6 +4,7 @@ import "./globals.css";
 import SidebarLayoutWrapper from "./components/SidebarLayoutWrapper";
 import RootProvider from "./providers/RootProvider";
 import Drawer from "./components/Drawer";
+import ConfirmationDialogue from "./components/ConfirmationDialogue";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
           <SidebarLayoutWrapper>
             {children}
             <Drawer />
+            <ConfirmationDialogue />
           </SidebarLayoutWrapper>
         </RootProvider>
       </body>

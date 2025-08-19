@@ -20,5 +20,5 @@ export async function getSignedUrlForFile(
     ContentType: fileType,
   });
 
-  return getSignedUrl(s3, command, { expiresIn: 60 });
+  return getSignedUrl(s3, command, { expiresIn: 120 });
 }

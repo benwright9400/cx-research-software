@@ -6,8 +6,21 @@ import Alert from "../Alert";
 import { useSession } from "next-auth/react";
 
 export default function DocumentForm() {
-    const [alert, setAlert] = useState<{success: boolean, message: string} | null>(null);
+    const [alert, setAlert] = useState<{ success: boolean, message: string } | null>(null);
     const session = useSession();
+
+    async function logFileUpload(uri: string, fileName: string): Promise<boolean> {
+        const upload = await fetch("/api/files", {
+            method: "POST",
+            body: JSON.stringify({uri: uri, fileName: fileName}),
+        });
+        const uploadJSON = await upload.text();
+
+        // use this to check recieved
+        console.log(uploadJSON);
+
+        return true;
+    }
 
     async function onFileChange(file: File | undefined) {
         if (!file) {
@@ -25,7 +38,9 @@ export default function DocumentForm() {
             },
         });
 
-        if(upload.ok) {
+        const successfullLoggedInDb = await logFileUpload(`${session.data?.user.googleSub}/${file.name}`, file.name);
+
+        if (upload.ok && successfullLoggedInDb) {
             console.log("Okay!");
             setAlert({
                 success: true,

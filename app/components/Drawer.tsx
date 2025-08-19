@@ -2,13 +2,13 @@
 
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { PopupContextType, usePopup } from '../providers/child-providers/PopupProvider'
+import { DrawerContextType, useDrawer } from '../providers/child-providers/DrawerProvider'
 import DocumentForm from './forms/DocumentForm';
 import DocumentTable from './tables/DocumentTable';
 
 // Written to eventually include multiple drawer pages through dynamic imports
 export default function Drawer() {
-  const popup: PopupContextType = usePopup();
+  const popup: DrawerContextType = useDrawer();
 
   /* 
     1. Add context

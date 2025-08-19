@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode } from "react";
 
-export type PopupContextType = {
+export type DrawerContextType = {
     isOpen: boolean;
     title: string;
     openPopup: () => void;
@@ -10,9 +10,9 @@ export type PopupContextType = {
     setTitle: (title: string) => void;
 };
 
-const PopupContext = createContext<PopupContextType | undefined>(undefined);
+const PopupContext = createContext<DrawerContextType | undefined>(undefined);
 
-export function PopupProvider({ children }: { children: ReactNode }) {
+export function DrawerProvider({ children }: { children: ReactNode }) {
     const [isOpen, setIsOpen] = useState(false);
     const [title, setTitle] = useState("");
 
@@ -24,11 +24,11 @@ export function PopupProvider({ children }: { children: ReactNode }) {
     </PopupContext.Provider>);
 }
 
-export function usePopup() {
+export function useDrawer() {
     const context = useContext(PopupContext);
 
     if(!context) {
-        throw new Error("PopupProvider not detected; please check it is in a parent component");
+        throw new Error("DrawerProvider not detected; please check it is in a parent component");
     }
 
     return context;

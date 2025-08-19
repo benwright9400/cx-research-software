@@ -1,20 +1,54 @@
-const people = [
-  { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-  { name: 'Courtney Henry', title: 'Designer', email: 'courtney.henry@example.com', role: 'Admin' },
-  { name: 'Tom Cook', title: 'Director of Product', email: 'tom.cook@example.com', role: 'Member' },
-  { name: 'Whitney Francis', title: 'Copywriter', email: 'whitney.francis@example.com', role: 'Admin' },
-  { name: 'Leonard Krasner', title: 'Senior Designer', email: 'leonard.krasner@example.com', role: 'Owner' },
-  { name: 'Floyd Miles', title: 'Principal Designer', email: 'floyd.miles@example.com', role: 'Member' },
-]
+"use client";
+
+import { useConfirmationDialogue } from "@/app/providers/child-providers/ConfirmationDialogProvider";
+import { useEffect, useState } from "react"
 
 export default function DocumentTable() {
+  const confirmationDialogue = useConfirmationDialogue();
+
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    getUploadedFiles();
+  }, []);
+
+  async function getUploadedFiles() {
+    setIsLoading(true);
+
+    const res = await fetch("/api/files")
+    const body = await res.json();
+
+    console.log(body.files);
+    setUploadedFiles(body.files);
+
+    setIsLoading(false);
+  }
+
+  async function deleteFile(uri: string) {
+    const res = await fetch(`/api/files?uri=${uri}`, {
+      method: "DELETE",
+    })
+    const body = await res.json();
+    console.log(body);
+
+    getUploadedFiles();
+  }
+
+  function openDeleteFlow(fileName: string, uri: string) {
+    confirmationDialogue.setTitle(`Delete ${fileName}?`)
+    confirmationDialogue.setMessage("Deleting this file is an action which cannot be reversed. Would you like to proceed?")
+    confirmationDialogue.setCallback(() => () => deleteFile(uri));
+    confirmationDialogue.openPopup();
+  }
+
   return (
     <div className="px-4">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold dark:text-white mt-4">Documents</h1>
           <p className="mt-2 text-sm dark:text-gray-300 text-gray-600">
-            A list of all uploaded evidence documents 
+            A list of all uploaded evidence documents
           </p>
         </div>
       </div>
@@ -34,21 +68,21 @@ export default function DocumentTable() {
             </tr>
           </thead>
           <tbody className="divide-y divide-white/10 dark:bg-gray-900">
-            {people.map((person) => (
-              <tr key={person.email}>
+            {!isLoading ? uploadedFiles.map((file) => (
+              <tr key={file.uri}>
                 <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium dark:text-white text-gray-600 sm:w-auto sm:max-w-none">
-                  {person.name}
+                  {file.fileName}
                   <dl className="font-normal lg:hidden">
                   </dl>
                 </td>
-                <td className="px-3 py-4 text-sm font-medium text-gray-400">{person.role}</td>
+                <td className="px-3 py-4 text-sm font-medium text-gray-400">{file.status}</td>
                 <td className="py-4 pl-3 pr-8 text-right text-sm font-medium">
-                  <a href="#" className="text-indigo-400 hover:text-indigo-300">
-                    Delete<span className="sr-only">, {person.name}</span>
+                  <a onClick={() => openDeleteFlow(file.fileName, file.uri)} className="text-indigo-400 hover:text-indigo-300">
+                    Delete<span className="sr-only">, {file.fileName}</span>
                   </a>
                 </td>
               </tr>
-            ))}
+            )) : <p>Loading...</p>}
           </tbody>
         </table>
       </div>

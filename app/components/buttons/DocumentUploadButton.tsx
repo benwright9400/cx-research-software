@@ -1,9 +1,9 @@
 "use client";
 
-import { usePopup } from "@/app/providers/child-providers/PopupProvider";
+import { useDrawer } from "@/app/providers/child-providers/DrawerProvider";
 
 export default function DocumentUploadButton() {
-    const popup = usePopup();
+    const popup = useDrawer();
 
     return (
         <button
