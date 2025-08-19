@@ -1,6 +1,50 @@
+"use client";
+
 import { DocumentIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
+import Alert from "../Alert";
+import { useSession } from "next-auth/react";
 
 export default function DocumentForm() {
+    const [alert, setAlert] = useState<{success: boolean, message: string} | null>(null);
+    const session = useSession();
+
+    async function onFileChange(file: File | undefined) {
+        if (!file) {
+            return;
+        }
+
+        const res = await fetch(`/api/file-upload?fileName=${session.data?.user.googleSub}/${file.name}&fileType=${file.type}`);
+        const { url } = await res.json();
+
+        const upload = await fetch(url, {
+            method: "PUT",
+            body: file,
+            headers: {
+                "Content-Type": file.type,
+            },
+        });
+
+        if(upload.ok) {
+            console.log("Okay!");
+            setAlert({
+                success: true,
+                message: `File ${file.name} successfully uploaded`
+            })
+        } else {
+            console.log("Not okay!");
+            setAlert({
+                success: false,
+                message: "There was an error, please try again later"
+            })
+        }
+
+    }
+
+    function dismissAlert() {
+        setAlert(null);
+    }
+
     return (
         <div className="space-y-8 border-b border-white/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-white/10 sm:border-t sm:border-t-white/10 sm:pb-0">
             <label htmlFor="cover-photo" className="block text-base font-semibold dark:text-gray-200 text-gray-900 pl-4 py-2 sm:pt-1.5">
@@ -16,7 +60,7 @@ export default function DocumentForm() {
                                 className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-indigo-600 hover:text-indigo-500"
                             >
                                 <span>Upload a file</span>
-                                <input id="file-upload" name="file-upload" type="file" className="sr-only" />
+                                <input onChange={(e) => onFileChange(e.target.files?.[0])} id="file-upload" name="file-upload" type="file" className="sr-only" />
                             </label>
                             <p className="pl-1 dark:text-gray-200">or drag and drop</p>
                         </div>
@@ -24,6 +68,7 @@ export default function DocumentForm() {
                     </div>
                 </div>
             </div>
+            {alert && <Alert success={alert.success} message={alert.message} onDismiss={dismissAlert} />}
         </div>
     );
 }
