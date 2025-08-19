@@ -6,6 +6,7 @@ import {
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
+import extractText from "@/lib/business/analyse-data/ExtractText";
 
 // get request which gets files from DB
 export async function GET() {
@@ -58,6 +59,10 @@ export async function POST(req: NextRequest) {
   console.log(body);
 
   const uploadResult = await logFile(body.uri, session.user.googleSub, body.fileName );
+
+  console.log(body.uri);
+
+  await extractText(body.uri);
 
   return NextResponse.json(uploadResult, { status: 201 });
 }
