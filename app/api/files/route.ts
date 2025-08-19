@@ -6,7 +6,7 @@ import {
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
-import extractText from "@/lib/business/analyse-data/ExtractText";
+import analyseFile from "@/lib/business/analyse-data/AnalyseFile";
 
 // get request which gets files from DB
 export async function GET() {
@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
 
   console.log(body.uri);
 
-  await extractText(body.uri);
+  await analyseFile(body.uri);
 
   return NextResponse.json(uploadResult, { status: 201 });
 }
