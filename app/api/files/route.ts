@@ -16,6 +16,8 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorised" });
   }
 
+  console.log(session.user);
+
   const files = await getFilesListHeldByUserId(session.user.googleSub);
 
   return NextResponse.json({ files: files });
@@ -58,11 +60,28 @@ export async function POST(req: NextRequest) {
 
   console.log(body);
 
-  const uploadResult = await logFile(body.uri, session.user.googleSub, body.fileName );
+  console.log("saving:", body.uri, session.user.googleSub, body.fileName);
 
-  console.log(body.uri);
+  try {
+    console.log("saving:", body.uri, session.user.googleSub, body.fileName);
 
-  await analyseFile(body.uri);
+    const uploadResult = await logFile(
+      body.uri,
+      session.user.googleSub,
+      body.fileName
+    );
 
-  return NextResponse.json(uploadResult, { status: 201 });
+    console.log(body.uri);
+
+    await analyseFile(body.uri);
+
+    return NextResponse.json(uploadResult, { status: 201 });
+  } catch (error) {
+    console.log("saving:", body.uri, session.user.googleSub, body.fileName);
+
+    console.log(error);
+    console.log(error.errors);
+
+    return NextResponse.json({}, { status: 400 });
+  }
 }

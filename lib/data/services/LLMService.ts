@@ -15,13 +15,14 @@ export async function invokeModel(
   systemPrompt: string,
   humanPrompt: string,
   targetText: string,
-  model: string = "anthropic.claude-3-sonnet-20240229-v1:0"
+  maxTokens: number = 1000,
+  model: string = "anthropic.claude-3-sonnet-20240229-v1:0",
 ): Promise<string> {
   const command = new InvokeModelCommand({
     modelId: model,
     body: JSON.stringify({
       anthropic_version: "bedrock-2023-05-31",
-      max_tokens: 1000,
+      max_tokens: maxTokens,
       system: systemPrompt, // Separate system field
       messages: [
         {
@@ -38,5 +39,5 @@ export async function invokeModel(
   const processedResponse = new TextDecoder().decode(response.body);
 
   console.log(processedResponse);
-  return processedResponse;
+  return JSON.parse(processedResponse).content[0].text;
 }

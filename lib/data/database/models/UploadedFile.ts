@@ -1,22 +1,23 @@
-import mongoose, { Model, Schema } from "mongoose";
+import mongoose, { Document, Model, Schema } from "mongoose";
 
 export interface IUploadedFile extends Document {
-  uri: string;
-  accountId: string;
-  fileName: string;
-  status: string;
-  createdAt: Date;
+  uri?: string;
+  accountId?: string;
+  fileName?: string;
+  status?: string;
+  createdAt?: Date;
 }
 
 const UploadedFileSchema: Schema<IUploadedFile> = new Schema<IUploadedFile>(
   {
-    uri: { type: String, required: true },
-    fileName: {type: String, required: true},
-    status: {type: String, required: true},
-    accountId: { type: String, required: true },
+    uri: { type: String, required: false },
+    fileName: { type: String, required: false },
+    status: { type: String, required: false },
+    accountId: { type: String, required: false },
     createdAt: { type: Date, default: Date.now },
   },
   { timestamps: true }
 );
 
-export default mongoose.models.UploadedFile || mongoose.model<IUploadedFile>("UploadedFile", UploadedFileSchema);
+export default mongoose.models.UploadedFile ||
+  mongoose.model<IUploadedFile>("UploadedFile", UploadedFileSchema);
