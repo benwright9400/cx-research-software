@@ -80,11 +80,11 @@ export default function DocumentForm() {
                                 className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-indigo-600 hover:text-indigo-500"
                             >
                                 <span>Upload a file</span>
-                                <input onChange={(e) => onFileChange(e.target.files?.[0])} id="file-upload" name="file-upload" type="file" className="sr-only" />
+                                <input onChange={(e) => onFileChange(e.target.files?.[0])} id="file-upload" name="file-upload" accept="application/docx" type="file" className="sr-only" />
                             </label>
                             <p className="pl-1 dark:text-gray-200">or drag and drop</p>
                         </div>
-                        <p className="text-xs/5 text-gray-600 dark:text-gray-200">PNG, JPG, GIF up to 10MB</p>
+                        <p className="text-xs/5 text-gray-600 dark:text-gray-200">DOCX up to 10MB</p>
                     </div>
                 </div>
             </div>

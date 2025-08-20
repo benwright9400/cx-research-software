@@ -16,6 +16,8 @@ import { Props } from 'next/script'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
+import Image from 'next/image'
+import Logo from '@/public/logo.png';
 
 const navigation = [
     { name: 'Research Strategy', href: '#', icon: ArrowTrendingUpIcon, path: "/research-strategy" },
@@ -73,14 +75,18 @@ export default function SidebarLayoutWrapper({ children }: Props) {
                             {/* Sidebar component, swap this element with another sidebar if you like */}
                             <div className="relative flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-2 ring-1 ring-white/10 dark:before:pointer-events-none dark:before:absolute dark:before:inset-0 dark:before:bg-black/10">
                                 <div className="relative flex h-16 shrink-0 items-center">
-                                    <img
-                                        alt="Your Company"
-                                        src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+                                    <Image
+                                        alt="CX Research"
+                                        src={Logo.src}
+                                        width={20}
+                                        height={20}
                                         className="h-8 w-auto dark:hidden"
                                     />
-                                    <img
-                                        alt="Your Company"
-                                        src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                                    <Image
+                                        alt="CX Research"
+                                        src={Logo.src}
+                                        width={20}
+                                        height={20}
                                         className="relative h-8 w-auto not-dark:hidden"
                                     />
                                 </div>
@@ -118,14 +124,18 @@ export default function SidebarLayoutWrapper({ children }: Props) {
                     {/* Sidebar component, swap this element with another sidebar if you like */}
                     <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 px-6 dark:border-white/10 dark:bg-black/10">
                         <div className="flex h-16 shrink-0 items-center">
-                            <img
-                                alt="Your Company"
-                                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+                            <Image
+                                alt="CX Research"
+                                src={Logo.src}
+                                width={20}
+                                height={20}
                                 className="h-8 w-auto dark:hidden"
                             />
-                            <img
-                                alt="Your Company"
-                                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                            <Image
+                                alt="CX Research"
+                                src={Logo.src}
+                                width={20}
+                                height={20}
                                 className="h-8 w-auto not-dark:hidden"
                             />
                         </div>

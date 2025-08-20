@@ -1,25 +1,31 @@
+import Image from "next/image";
 import GoogleSignIn from "../components/login/GoogleSignIn";
+import Logo from '@/public/logo.png';
 
 export default function LoginPage() {
   return <div className="h-screen bg-white dark:bg-gray-900">
-      <div className="flex min-h-full">
-        <div className="flex flex-1 flex-col text-center justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
-          <div className="mx-auto w-full max-w-sm lg:w-96">
-            <div>
-              <img
-                alt="Your Company"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                className="h-10 mx-auto dark:hidden"
-              />
-              <img
-                alt="Your Company"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                className="h-10 mx-auto not-dark:hidden"
-              />
-              <h2 className="mt-8 text-2xl/9 font-bold tracking-tight text-gray-900 dark:text-white">
-                Sign in to your account
-              </h2>
-              {/* <p className="mt-2 text-sm/6 text-gray-500 dark:text-gray-400">
+    <div className="flex min-h-full">
+      <div className="flex flex-1 flex-col text-center justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+        <div className="mx-auto w-full max-w-sm lg:w-96">
+          <div>
+            <Image
+              alt="CX Research"
+              src={Logo.src}
+              width={40}
+              height={40} 
+              className="mx-auto dark:hidden"
+            />
+            <Image
+              alt="CX Research"
+              src={Logo.src}
+              width={40}
+              height={40} 
+              className="mx-auto not-dark:hidden"
+            />
+            <h2 className="mt-8 text-2xl/9 font-bold tracking-tight text-gray-900 dark:text-white">
+              Sign in to your account
+            </h2>
+            {/* <p className="mt-2 text-sm/6 text-gray-500 dark:text-gray-400">
                 Not a member?{' '}
                 <a
                   href="#"
@@ -28,10 +34,10 @@ export default function LoginPage() {
                   Start a 14 day free trial
                 </a>
               </p> */}
-            </div>
+          </div>
 
-            <div className="mt-10">
-              {/* <div>
+          <div className="mt-10">
+            {/* <div>
                 <form action="#" method="POST" className="space-y-6">
                   <div>
                     <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900 dark:text-gray-100">
@@ -123,30 +129,30 @@ export default function LoginPage() {
                 </form>
               </div> */}
 
-              <div className="mt-10">
-                <div className="relative">
-                  <div aria-hidden="true" className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-200 dark:border-gray-700" />
-                  </div>
-                  <div className="relative flex justify-center text-sm/6 font-medium">
-                    <span className="bg-white px-6 text-gray-900 dark:bg-gray-900 dark:text-gray-300">
-                      Continue with
-                    </span>
-                  </div>
+            <div className="mt-10">
+              <div className="relative">
+                <div aria-hidden="true" className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-200 dark:border-gray-700" />
                 </div>
-
-                <GoogleSignIn />
+                <div className="relative flex justify-center text-sm/6 font-medium">
+                  <span className="bg-white px-6 text-gray-900 dark:bg-gray-900 dark:text-gray-300">
+                    Continue with
+                  </span>
+                </div>
               </div>
+
+              <GoogleSignIn />
             </div>
           </div>
         </div>
-        <div className="relative hidden w-0 flex-1 lg:block">
-          <img
-            alt=""
-            src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80"
-            className="absolute inset-0 size-full object-cover"
-          />
-        </div>
       </div>
-    </div>;
+      <div className="relative hidden w-0 flex-1 lg:block">
+        <img
+          alt=""
+          src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80"
+          className="absolute inset-0 size-full object-cover"
+        />
+      </div>
+    </div>
+  </div>;
 }
