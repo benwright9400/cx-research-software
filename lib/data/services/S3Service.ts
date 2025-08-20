@@ -3,10 +3,10 @@ import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 export const s3 = new S3Client({
-  region: process.env.AWS_REGION!,
+  region: process.env.REGION!,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+    accessKeyId: process.env.ACCESS_KEY_ID!,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY!,
   },
 });
 
@@ -15,7 +15,7 @@ export async function getSignedUrlForFile(
   fileType: string
 ): Promise<string> {
   const command = new PutObjectCommand({
-    Bucket: process.env.AWS_BUCKET_NAME!,
+    Bucket: process.env.BUCKET_NAME!,
     Key: fileName,
     ContentType: fileType,
   });
@@ -34,7 +34,7 @@ async function streamToBuffer(stream: any): Promise<Buffer> {
 
 export async function getBufferedFile(uri: string): Promise<Buffer> {
   const command = new GetObjectCommand({
-    Bucket: process.env.AWS_BUCKET_NAME!,
+    Bucket: process.env.BUCKET_NAME!,
     Key: uri
   });
 
