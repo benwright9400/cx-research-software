@@ -5,8 +5,8 @@ import {
 } from "@/lib/data/database/repositories/UploadedFileRepository";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
-import { authOptions } from "../auth/[...nextauth]/route";
 import analyseFile from "@/lib/business/analyse-data/AnalyseFile";
+import { authOptions } from "@/auth";
 
 // get request which gets files from DB
 export async function GET() {
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
     await analyseFile(body.uri);
 
     return NextResponse.json(uploadResult, { status: 201 });
-  } catch (error) {
+  } catch (error: any) {
     console.log("saving:", body.uri, session.user.googleSub, body.fileName);
 
     console.log(error);

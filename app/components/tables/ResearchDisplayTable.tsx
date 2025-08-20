@@ -31,7 +31,7 @@ export default function ResearchDisplayTable() {
 
     return (
         <ul role="list" className="divide-y divide-gray-100 dark:divide-white/5 mt-8">
-            {uploadedFiles.map((file) => (
+            {uploadedFiles?.map((file) => (
                 <li
                     key={file.uri}
                     className="relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-50 sm:px-6 lg:px-8 dark:hover:bg-gray/[0.04]"

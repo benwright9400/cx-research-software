@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
 
 import { getPurposesByUri } from "@/lib/data/database/repositories/PurposeRepository";
 import { getCodesByUri } from "@/lib/data/database/repositories/CodeRepository";
 import { getThemesByUri } from "@/lib/data/database/repositories/ThemeRepository";
+import { authOptions } from "@/auth";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
