@@ -1,7 +1,10 @@
 "use client";
 
 import { useConfirmationDialogue } from "@/app/providers/child-providers/ConfirmationDialogProvider";
+import { Button } from "@headlessui/react";
+import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react"
+import SyncButton from "../buttons/SyncButton";
 
 export default function DocumentTable() {
   const confirmationDialogue = useConfirmationDialogue();
@@ -46,12 +49,20 @@ export default function DocumentTable() {
     <div className="px-4">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold dark:text-white mt-4">Documents</h1>
+          <div className="flex flex-row">
+            <h1 className="text-base font-semibold dark:text-white mt-4">Documents</h1>
+            <SyncButton onPressed={getUploadedFiles} />
+          </div>
           <p className="mt-2 text-sm dark:text-gray-300 text-gray-600">
             A list of all uploaded evidence documents
           </p>
         </div>
       </div>
+
+      <div className="ml-auto w-fit">
+
+      </div>
+
       <div className="-mx-4 mt-8 sm:-mx-0">
         <table className="min-w-full divide-y divide-white/15">
           <thead>

@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import DocumentUploadButton from "../components/buttons/DocumentUploadButton";
+import SyncButton from "../components/buttons/SyncButton";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
     return (

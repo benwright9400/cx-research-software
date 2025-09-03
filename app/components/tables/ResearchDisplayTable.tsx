@@ -2,6 +2,7 @@
 
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import { useEffect, useState } from 'react';
+import SyncButton from '../buttons/SyncButton';
 
 export default function ResearchDisplayTable() {
     const [uploadedFiles, setUploadedFiles] = useState();
@@ -30,7 +31,10 @@ export default function ResearchDisplayTable() {
     }
 
     return (
-        <ul role="list" className="divide-y divide-gray-100 dark:divide-white/5 mt-8">
+        <ul role="list" className="divide-y divide-gray-100 dark:divide-white/5 mt-4">
+            <div className="w-full flex flex-row">
+                <SyncButton onPressed={getUploadedFiles} />
+            </div>
             {uploadedFiles?.map((file) => (
                 <li
                     key={file.uri}
