@@ -12,9 +12,13 @@ export default function DocumentForm() {
     async function logFileUpload(uri: string, fileName: string): Promise<boolean> {
         const upload = await fetch("/api/files", {
             method: "POST",
-            body: JSON.stringify({uri: uri, fileName: fileName}),
+            body: JSON.stringify({ uri: uri, fileName: fileName }),
         });
         const uploadJSON = await upload.text();
+
+        if (!upload.ok) {
+            return false;
+        }
 
         // use this to check recieved
         console.log(uploadJSON);
@@ -39,9 +43,9 @@ export default function DocumentForm() {
         });
 
         setAlert({
-                success: true,
-                message: "Upload in progress - this may take a couple of minutes"
-            })
+            success: true,
+            message: "Upload in progress - this may take a couple of minutes"
+        })
 
         const successfullLoggedInDb = await logFileUpload(`${session.data?.user.googleSub}/${file.name}`, file.name);
 
@@ -52,10 +56,20 @@ export default function DocumentForm() {
                 message: `File ${file.name} successfully uploaded`
             })
         } else {
+            if (upload.ok) {
+                setAlert({
+                    success: true,
+                    message: `File ${file.name} successfully uploaded`
+                })
+                return;
+            }
+
+            let body = upload.json();
+            let errorMessage = ": " + body?.error;
             console.log("Not okay!");
             setAlert({
                 success: false,
-                message: "There was an error, please try again later"
+                message: `There was an error${errorMessage}`
             })
         }
 

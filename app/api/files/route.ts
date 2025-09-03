@@ -82,6 +82,6 @@ export async function POST(req: NextRequest) {
     console.log(error);
     console.log(error.errors);
 
-    return NextResponse.json({}, { status: 400 });
+    return NextResponse.json({ error: error.message }, { status: 400 });
   }
 }

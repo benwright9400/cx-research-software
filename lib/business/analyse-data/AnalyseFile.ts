@@ -10,18 +10,16 @@ import { Analysis } from "@/types/analysis";
 export default async function analyseFile(uri: string) {
   const fileText = await extractText(uri);
 
-  // Get purpose first
   const analysis: Analysis = await invokeModel(fileText);
 
-  console.log("start:", analysis);
 
   const purpose = await createPurpose({
     uri: uri,
     purpose: analysis.purpose,
   });
 
-  const purposeId = purpose._id;
-  console.log("purposeId type:", typeof purposeId);
+  const purposeId = purpose._id as string;
+
 
   let analysisCodes = analysis.codes;
   analysisCodes.forEach(async (code) => {
@@ -34,6 +32,7 @@ export default async function analyseFile(uri: string) {
     });
   });
 
+
   let analysisThemes = analysis.themes;
   analysisThemes.forEach(async (theme) => {
     await createTheme({
@@ -45,5 +44,7 @@ export default async function analyseFile(uri: string) {
     });
   });
 
+
   console.log(analysis);
+  return analysis;
 }

@@ -12,9 +12,7 @@ const client = new BedrockAgentRuntimeClient({
   },
 });
 
-export async function invokeModel(
-  targetText: string,
-): Promise<Analysis> {
+export async function invokeModel(targetText: string): Promise<Analysis> {
   const command = new InvokeFlowCommand({
     flowIdentifier: "arn:aws:bedrock:eu-west-2:558099092121:flow/X1744H1HB2",
     flowAliasIdentifier:
@@ -31,7 +29,6 @@ export async function invokeModel(
   const response = await client.send(command);
 
   let finalOutput: string | null = null;
-
   for await (const event of response.responseStream) {
     if (event.flowOutputEvent) {
       console.log("Flow output:", event.flowOutputEvent.content.document);
@@ -48,16 +45,20 @@ export async function invokeModel(
     }
   }
 
-  let processedFinalOutput: string | null = finalOutput;
-  // remove comments
-  if(finalOutput && finalOutput.length > 10) {
-    processedFinalOutput = finalOutput?.substring(8, (finalOutput.length - 3));
-    console.log(finalOutput);
-  }
-
-  console.log(processedFinalOutput);
+  let processedFinalOutput: string = removeComments(finalOutput);
 
   let analysis: Analysis = JSON.parse(processedFinalOutput) as Analysis;
 
   return analysis;
+}
+
+function removeComments(rawText: string): string {
+  let processedFinalOutput: string = rawText || "";
+
+  if (rawText && rawText.length > 10) {
+    processedFinalOutput = rawText?.substring(8, rawText.length - 3);
+    console.log(rawText);
+  }
+
+  return processedFinalOutput;
 }
