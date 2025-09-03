@@ -5,7 +5,7 @@ export interface ITheme extends Document {
   purposeId?: string | undefined;
   theme?: string | undefined;
   description?: string | undefined;
-  codes: {}[];
+  codes: number[];
   createdAt: Date;
 }
 
@@ -15,7 +15,7 @@ const ThemeSchema: Schema<ITheme> = new Schema<ITheme>(
     purposeId: { type: String, required: false },
     theme: { type: String, required: false },
     description: { type: String, required: false },
-    codes: [{ type: Object, required: false }],
+    codes: [{ type: Number, required: false }],
     createdAt: { type: Date, default: Date.now },
   },
   { timestamps: true }

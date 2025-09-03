@@ -1,9 +1,10 @@
+import { Analysis } from "@/types/analysis";
 import {
-  BedrockRuntimeClient,
-  InvokeModelCommand,
-} from "@aws-sdk/client-bedrock-runtime";
+  BedrockAgentRuntimeClient,
+  InvokeFlowCommand,
+} from "@aws-sdk/client-bedrock-agent-runtime";
 
-const client = new BedrockRuntimeClient({
+const client = new BedrockAgentRuntimeClient({
   region: "eu-west-2",
   credentials: {
     accessKeyId: process.env.ACCESS_KEY_ID!,
@@ -12,32 +13,51 @@ const client = new BedrockRuntimeClient({
 });
 
 export async function invokeModel(
-  systemPrompt: string,
-  humanPrompt: string,
   targetText: string,
-  maxTokens: number = 1000,
-  model: string = "anthropic.claude-3-sonnet-20240229-v1:0",
-): Promise<string> {
-  const command = new InvokeModelCommand({
-    modelId: model,
-    body: JSON.stringify({
-      anthropic_version: "bedrock-2023-05-31",
-      max_tokens: maxTokens,
-      system: systemPrompt, // Separate system field
-      messages: [
-        {
-          role: "user",
-          content: `${humanPrompt}: ${targetText}`,
-        },
-      ],
-    }),
-    contentType: "application/json",
-    accept: "application/json",
+): Promise<Analysis> {
+  const command = new InvokeFlowCommand({
+    flowIdentifier: "arn:aws:bedrock:eu-west-2:558099092121:flow/X1744H1HB2",
+    flowAliasIdentifier:
+      "arn:aws:bedrock:eu-west-2:558099092121:flow/X1744H1HB2/alias/2YOS49BDTF",
+    inputs: [
+      {
+        content: { document: targetText },
+        nodeName: "FlowInputNode",
+        nodeOutputName: "document",
+      },
+    ],
   });
 
   const response = await client.send(command);
-  const processedResponse = new TextDecoder().decode(response.body);
 
-  console.log(processedResponse);
-  return JSON.parse(processedResponse).content[0].text;
+  let finalOutput: string | null = null;
+
+  for await (const event of response.responseStream) {
+    if (event.flowOutputEvent) {
+      console.log("Flow output:", event.flowOutputEvent.content.document);
+      finalOutput = event.flowOutputEvent.content.document;
+    }
+    if (event.flowCompletionEvent) {
+      console.log(
+        "Flow completed:",
+        event.flowCompletionEvent.completionReason
+      );
+    }
+    if (event.flowErrorEvent) {
+      console.error("Flow error:", event.flowErrorEvent.errorMessage);
+    }
+  }
+
+  let processedFinalOutput: string | null = finalOutput;
+  // remove comments
+  if(finalOutput && finalOutput.length > 10) {
+    processedFinalOutput = finalOutput?.substring(8, (finalOutput.length - 3));
+    console.log(finalOutput);
+  }
+
+  console.log(processedFinalOutput);
+
+  let analysis: Analysis = JSON.parse(processedFinalOutput) as Analysis;
+
+  return analysis;
 }
